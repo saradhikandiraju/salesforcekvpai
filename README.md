@@ -231,6 +231,8 @@ Edit `TEAM` array in `constants.tsx` to update team information.
 2. Import your repository on [Netlify](https://netlify.com)
 3. Build command: `npm run build`
 4. Publish directory: `.next`
+5. **Important**: Update `COMPANY_CONFIG.site.url` in `constants.tsx` to your Netlify URL (e.g., `https://your-app.netlify.app`)
+6. The site is already configured with Suspense boundaries for Netlify compatibility
 
 ### Other Platforms
 

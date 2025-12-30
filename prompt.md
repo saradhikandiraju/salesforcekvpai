@@ -359,6 +359,7 @@ The `constants.tsx` file should export:
    - Ensure `next.config.js` is properly configured
    - Image domains whitelisted
    - No environment variables required
+   - For Netlify: Ensure `useSearchParams()` is wrapped in Suspense boundary
 
 2. **Git Configuration:**
    - `.gitignore` should exclude `.next/`, `node_modules/`, etc.
@@ -367,6 +368,8 @@ The `constants.tsx` file should export:
 3. **Platform Support:**
    - Should work on Vercel, Netlify, or any Node.js hosting
    - No special build requirements
+   - Update `COMPANY_CONFIG.site.url` to match your deployment domain
+   - For Netlify: Use your Netlify app URL (e.g., `https://your-app.netlify.app`)
 
 ### Testing Checklist
 
