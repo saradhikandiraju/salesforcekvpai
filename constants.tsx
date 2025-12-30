@@ -42,7 +42,7 @@ export const COMPANY_CONFIG = {
     // Option 1: FormSubmit (easiest) - Just set formAction to: `https://formsubmit.co/${contact.email}`
     // Option 2: Formspree - Sign up at formspree.io and get your form ID
     // Option 3: EmailJS - Sign up at emailjs.com and configure
-    formAction: `https://formsubmit.co/salesforcetroop@gmail.com`, // FormSubmit - no signup needed!
+    formAction: `https://formsubmit.co/113f13041b46112add2f0fd534686d83`, // FormSubmit - no signup needed!
     // Alternative: formAction: `https://formspree.io/f/YOUR_FORM_ID`, // Formspree option
   },
   
