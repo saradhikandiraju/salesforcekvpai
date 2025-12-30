@@ -1,6 +1,8 @@
+'use client'
 
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 import { 
   ArrowRight, 
   Calendar, 
@@ -8,27 +10,27 @@ import {
   Search,
   Filter,
   Tag as TagIcon
-} from 'lucide-react';
-import { BLOG_POSTS } from '../constants';
+} from 'lucide-react'
+import { BLOG_POSTS } from '@/constants'
 
-const Blog: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<string>('All');
+export default function BlogPage() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeCategory, setActiveCategory] = useState<string>('All')
 
-  const categories = ['All', 'Strategy', 'Technical', 'AI & Innovation', 'Platform Governance'];
+  const categories = ['All', 'Strategy', 'Technical', 'AI & Innovation', 'Platform Governance']
 
   const filteredPosts = useMemo(() => {
     return BLOG_POSTS.filter(post => {
       const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            post.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
-      const matchesCategory = activeCategory === 'All' || post.category === activeCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, activeCategory]);
+                            post.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+      const matchesCategory = activeCategory === 'All' || post.category === activeCategory
+      return matchesSearch && matchesCategory
+    })
+  }, [searchQuery, activeCategory])
 
-  const featuredPost = useMemo(() => BLOG_POSTS.find(p => p.isFeatured) || BLOG_POSTS[0], []);
-  const otherPosts = useMemo(() => filteredPosts.filter(p => p.id !== featuredPost.id || activeCategory !== 'All'), [filteredPosts, featuredPost, activeCategory]);
+  const featuredPost = useMemo(() => BLOG_POSTS.find(p => p.isFeatured) || BLOG_POSTS[0], [])
+  const otherPosts = useMemo(() => filteredPosts.filter(p => p.id !== featuredPost.id || activeCategory !== 'All'), [filteredPosts, featuredPost, activeCategory])
 
   return (
     <div className="bg-white min-h-screen">
@@ -89,10 +91,17 @@ const Blog: React.FC = () => {
       {activeCategory === 'All' && !searchQuery && (
         <section className="pt-16 pb-8">
           <div className="container mx-auto px-4">
-            <Link to={`/blog/${featuredPost.id}`} className="group relative block bg-navy rounded-[3rem] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01]">
+            <Link href={`/blog/${featuredPost.id}`} className="group relative block bg-navy rounded-[3rem] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01]">
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 <div className="aspect-[16/10] overflow-hidden">
-                  <img src={featuredPost.image} alt={featuredPost.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                  <Image 
+                    src={featuredPost.image} 
+                    alt={featuredPost.title} 
+                    width={1200} 
+                    height={600} 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    unoptimized
+                  />
                 </div>
                 <div className="p-8 md:p-16 flex flex-col justify-center text-white space-y-6">
                   <div className="flex items-center gap-3">
@@ -120,7 +129,14 @@ const Blog: React.FC = () => {
               otherPosts.map((post) => (
                 <article key={post.id} className="group flex flex-col h-full bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500">
                   <div className="aspect-[16/9] overflow-hidden relative">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <Image 
+                      src={post.image} 
+                      alt={post.title} 
+                      width={800} 
+                      height={400} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      unoptimized
+                    />
                     <div className="absolute bottom-4 left-4 flex gap-2">
                       <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] font-black text-navy uppercase tracking-widest shadow-sm">
                         {post.category}
@@ -134,14 +150,14 @@ const Blog: React.FC = () => {
                       ))}
                     </div>
                     <h3 className="text-2xl font-bold text-navy group-hover:text-salesforce transition-colors leading-tight">
-                      <Link to={`/blog/${post.id}`}>{post.title}</Link>
+                      <Link href={`/blog/${post.id}`}>{post.title}</Link>
                     </h3>
                     <p className="text-gray-500 font-light leading-relaxed flex-grow text-sm">{post.excerpt}</p>
                     <div className="pt-6 border-t border-gray-50 flex items-center justify-between">
                       <div className="flex items-center gap-3 text-xs font-bold text-gray-400 uppercase tracking-widest">
                         <span className="flex items-center gap-1.5"><Calendar size={12} /> {post.date.split(',')[0]}</span>
                       </div>
-                      <Link to={`/blog/${post.id}`} className="text-salesforce font-bold text-sm inline-flex items-center gap-1 group/link">
+                      <Link href={`/blog/${post.id}`} className="text-salesforce font-bold text-sm inline-flex items-center gap-1 group/link">
                         Read More <ArrowRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
                       </Link>
                     </div>
@@ -157,32 +173,7 @@ const Blog: React.FC = () => {
         </div>
       </section>
 
-      {/* Knowledge Newsletter */}
-      <section className="py-24 bg-navy relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-salesforce opacity-10 rounded-full blur-3xl -mr-48 -mt-48"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-3xl md:text-5xl font-black text-white leading-tight">Stay Ahead of the Curve</h2>
-            <p className="text-xl text-gray-400 font-light">Join our bi-weekly dispatch of Salesforce AI strategy, enterprise patterns, and ecosystem news.</p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onSubmit={(e) => e.preventDefault()}>
-               <input 
-                type="email" 
-                placeholder="Enter your work email" 
-                className="flex-grow px-8 py-4 rounded-full bg-white/10 border border-white/20 text-white focus:outline-none focus:border-salesforce"
-               />
-               <button className="px-10 py-4 bg-salesforce text-white rounded-full font-bold hover:bg-teal-accent transition-all whitespace-nowrap">
-                 Join 5,000+ Pros
-               </button>
-            </form>
-            <div className="flex items-center justify-center gap-4 text-xs font-bold text-gray-500 uppercase tracking-widest">
-               <span className="flex items-center gap-1"><TagIcon size={12} /> Weekly Tech Insights</span>
-               <span className="flex items-center gap-1"><TagIcon size={12} /> Case Study Breakdowns</span>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
-  );
-};
+  )
+}
 
-export default Blog;

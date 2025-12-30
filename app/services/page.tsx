@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import type { Metadata } from 'next'
+import Link from 'next/link'
 import { 
   CheckCircle2, 
   ArrowRight, 
@@ -8,10 +7,20 @@ import {
   Clock,
   Zap,
   Tag
-} from 'lucide-react';
-import { SERVICES } from '../constants';
+} from 'lucide-react'
+import { SERVICES } from '@/constants'
 
-const Services: React.FC = () => {
+export const metadata: Metadata = {
+  title: 'Salesforce Services | Expert Implementation & AI Solutions',
+  description: 'Full spectrum of Salesforce services: Implementation, Custom Development, Integration, Data Migration, AI & Agentforce, and Managed Services. Expert consulting for your CRM success.',
+  keywords: ['Salesforce Services', 'Salesforce Implementation', 'Custom Development', 'Salesforce Integration', 'Data Migration', 'AI Solutions', 'Agentforce'],
+  openGraph: {
+    title: 'Salesforce Services | Expert Implementation & AI Solutions',
+    description: 'Full spectrum of Salesforce services designed to scale with your business and maximize your investment.',
+  },
+}
+
+export default function ServicesPage() {
   return (
     <div className="bg-white">
       {/* Page Header */}
@@ -134,10 +143,10 @@ const Services: React.FC = () => {
                     </div>
 
                     <div className="pt-8 flex flex-col sm:flex-row gap-4">
-                      <Link to="/contact" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-salesforce text-white rounded-full font-bold hover:bg-navy transition-all shadow-xl shadow-salesforce/20 transform hover:-translate-y-1">
+                      <Link href="/contact" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-salesforce text-white rounded-full font-bold hover:bg-navy transition-all shadow-xl shadow-salesforce/20 transform hover:-translate-y-1">
                         Request a Quote <ArrowRight className="w-5 h-5" />
                       </Link>
-                      <Link to="/pricing" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-navy border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-all">
+                      <Link href="/pricing" className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-navy border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-all">
                         View Pricing Plans
                       </Link>
                     </div>
@@ -165,14 +174,13 @@ const Services: React.FC = () => {
           <div className="max-w-3xl mx-auto space-y-8">
             <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">Ready for a Technical Audit?</h2>
             <p className="text-xl text-white/70 font-light">Our lead architects are ready to evaluate your current instance and identify optimization opportunities.</p>
-            <Link to="/contact" className="inline-flex px-12 py-5 bg-salesforce text-white rounded-full text-lg font-bold hover:bg-white hover:text-navy transition-all shadow-2xl shadow-salesforce/20">
+            <Link href="/contact" className="inline-flex px-12 py-5 bg-salesforce text-white rounded-full text-lg font-bold hover:bg-white hover:text-navy transition-all shadow-2xl shadow-salesforce/20">
               Schedule Free Strategy Session
             </Link>
           </div>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Services;

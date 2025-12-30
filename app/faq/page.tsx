@@ -1,6 +1,7 @@
+'use client'
 
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { 
   Search, 
   Plus, 
@@ -9,24 +10,24 @@ import {
   Mail,
   Phone,
   HelpCircle
-} from 'lucide-react';
-import { FAQS } from '../constants';
+} from 'lucide-react'
+import { FAQS, COMPANY_CONFIG } from '@/constants'
 
-const FAQ: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('All');
+export default function FAQPage() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [activeCategory, setActiveCategory] = useState<string>('All')
 
-  const categories = ['All', 'General', 'Services', 'Pricing', 'Support'];
+  const categories = ['All', 'General', 'Services', 'Pricing', 'Support']
 
   const filteredFaqs = useMemo(() => {
     return FAQS.filter(faq => {
       const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = activeCategory === 'All' || faq.category === activeCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchQuery, activeCategory]);
+                            faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchesCategory = activeCategory === 'All' || faq.category === activeCategory
+      return matchesSearch && matchesCategory
+    })
+  }, [searchQuery, activeCategory])
 
   return (
     <div className="bg-white min-h-screen">
@@ -58,8 +59,8 @@ const FAQ: React.FC = () => {
               <button 
                 key={cat}
                 onClick={() => {
-                  setActiveCategory(cat);
-                  setOpenIndex(null);
+                  setActiveCategory(cat)
+                  setOpenIndex(null)
                 }}
                 className={`px-10 py-4 rounded-full text-sm font-black uppercase tracking-widest transition-all border-2 ${activeCategory === cat ? 'bg-salesforce border-salesforce text-white shadow-2xl shadow-salesforce/40' : 'bg-transparent border-gray-100 text-gray-500 hover:border-gray-300'}`}
               >
@@ -114,7 +115,7 @@ const FAQ: React.FC = () => {
                 <div>
                   <h4 className="font-black text-navy text-xl mb-2">Technical Inbox</h4>
                   <p className="text-gray-500 font-light text-sm mb-4">Direct architect access within 24h.</p>
-                  <a href="mailto:info@salesforcetroopai.com" className="text-salesforce font-bold hover:underline">info@salesforcetroopai.com</a>
+                  <a href={`mailto:${COMPANY_CONFIG.contact.email}`} className="text-salesforce font-bold hover:underline">{COMPANY_CONFIG.contact.email}</a>
                 </div>
               </div>
               <div className="bg-white p-12 rounded-[3.5rem] shadow-2xl flex flex-col items-center gap-6 border-2 border-salesforce hover:-translate-y-2 transition-transform">
@@ -122,7 +123,7 @@ const FAQ: React.FC = () => {
                 <div>
                   <h4 className="font-black text-navy text-xl mb-2">Instant Strategy</h4>
                   <p className="text-gray-500 font-light text-sm mb-4">Available Mon-Fri 9AM-6PM EST.</p>
-                  <Link to="/contact" className="px-8 py-3 bg-salesforce text-white rounded-full font-bold hover:bg-navy transition-all shadow-xl">Book Now</Link>
+                  <Link href="/contact" className="px-8 py-3 bg-salesforce text-white rounded-full font-bold hover:bg-navy transition-all shadow-xl">Book Now</Link>
                 </div>
               </div>
               <div className="bg-white p-12 rounded-[3.5rem] shadow-sm flex flex-col items-center gap-6 group hover:-translate-y-2 transition-transform">
@@ -130,7 +131,7 @@ const FAQ: React.FC = () => {
                 <div>
                   <h4 className="font-black text-navy text-xl mb-2">Priority Line</h4>
                   <p className="text-gray-500 font-light text-sm mb-4">For urgent multi-cloud inquiries.</p>
-                  <a href="tel:+15551234567" className="text-salesforce font-bold hover:underline">+1 (555) 123-4567</a>
+                  <a href={`tel:${COMPANY_CONFIG.contact.phone.replace(/\s/g, '')}`} className="text-salesforce font-bold hover:underline">{COMPANY_CONFIG.contact.phone}</a>
                 </div>
               </div>
             </div>
@@ -138,7 +139,6 @@ const FAQ: React.FC = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default FAQ;

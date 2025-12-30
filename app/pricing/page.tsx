@@ -1,20 +1,19 @@
+'use client'
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react'
+import Link from 'next/link'
 import { 
   Check, 
   X, 
-  HelpCircle, 
   Plus, 
   Minus,
-  MessageSquare,
-  ArrowRight
-} from 'lucide-react';
-import { FAQS } from '../constants';
+  MessageSquare
+} from 'lucide-react'
+import { FAQS } from '@/constants'
 
-const Pricing: React.FC = () => {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const pricingFaqs = FAQS.filter(f => f.category === 'Pricing');
+export default function PricingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const pricingFaqs = FAQS.filter(f => f.category === 'Pricing')
 
   const plans = [
     {
@@ -65,7 +64,7 @@ const Pricing: React.FC = () => {
       cta: 'Contact for Quote',
       popular: false,
     }
-  ];
+  ]
 
   return (
     <div className="bg-white">
@@ -112,7 +111,7 @@ const Pricing: React.FC = () => {
                 </ul>
 
                 <Link 
-                  to="/contact" 
+                  href="/contact" 
                   className={`w-full py-5 rounded-full text-center font-bold transition-all ${plan.popular ? 'bg-salesforce text-white hover:bg-navy shadow-lg shadow-salesforce/20' : 'bg-gray-100 text-navy hover:bg-navy hover:text-white'}`}
                 >
                   {plan.cta}
@@ -158,14 +157,13 @@ const Pricing: React.FC = () => {
           <div className="bg-navy rounded-[3rem] p-12 text-center text-white">
             <h3 className="text-3xl font-bold mb-6">Not sure which package fits your needs?</h3>
             <p className="text-gray-400 mb-10 max-w-xl mx-auto">Our advisors are available for a free consultation to map out your specific requirements and provide a custom recommendation.</p>
-            <Link to="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-salesforce rounded-full font-bold hover:bg-teal-accent transition-all">
+            <Link href="/contact" className="inline-flex items-center gap-3 px-10 py-5 bg-salesforce rounded-full font-bold hover:bg-teal-accent transition-all">
               Book a Free Consultation <MessageSquare className="w-5 h-5" />
             </Link>
           </div>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Pricing;

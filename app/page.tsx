@@ -1,6 +1,7 @@
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { 
   ArrowRight, 
   Cpu, 
@@ -10,11 +11,11 @@ import {
   MessageSquare,
   Award,
   Zap
-} from 'lucide-react';
-import { SERVICES } from '../constants';
+} from 'lucide-react'
+import { SERVICES } from '@/constants'
 
-const Home: React.FC = () => {
-  const [stats, setStats] = useState({ projects: 0, certs: 0, retention: 0 });
+export default function Home() {
+  const [stats, setStats] = useState({ projects: 0, certs: 0, retention: 0 })
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -22,10 +23,10 @@ const Home: React.FC = () => {
         projects: prev.projects < 500 ? prev.projects + 10 : 500,
         certs: prev.certs < 50 ? prev.certs + 2 : 50,
         retention: prev.retention < 98 ? prev.retention + 2 : 98,
-      }));
-    }, 40);
-    return () => clearInterval(timer);
-  }, []);
+      }))
+    }, 40)
+    return () => clearInterval(timer)
+  }, [])
 
   const getServiceVisual = (id: string, icon: React.ReactNode) => {
     const gradients: Record<string, string> = {
@@ -35,7 +36,7 @@ const Home: React.FC = () => {
       'migration': 'from-indigo-500 to-purple-600',
       'ai-solutions': 'from-salesforce via-teal-accent to-blue-400',
       'managed-services': 'from-navy via-salesforce to-indigo-800'
-    };
+    }
     
     return (
       <div className={`w-full h-40 rounded-[2.5rem] bg-gradient-to-br ${gradients[id] || 'from-salesforce to-blue-600'} flex items-center justify-center mb-8 relative overflow-hidden group-hover:scale-[1.02] transition-all duration-500 shadow-xl border border-white/10`}>
@@ -53,8 +54,8 @@ const Home: React.FC = () => {
           {icon}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div className="overflow-x-hidden">
@@ -84,10 +85,10 @@ const Home: React.FC = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24">
-            <Link to="/contact" className="w-full sm:w-auto px-12 py-5 bg-salesforce hover:bg-white hover:text-navy text-white rounded-full text-lg font-black transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3">
+            <Link href="/contact" className="w-full sm:w-auto px-12 py-5 bg-salesforce hover:bg-white hover:text-navy text-white rounded-full text-lg font-black transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3">
               Start Strategy Audit <Zap className="w-5 h-5 fill-current" />
             </Link>
-            <Link to="/services" className="w-full sm:w-auto px-12 py-5 bg-white/5 border-2 border-white/20 hover:bg-white hover:text-navy hover:border-white text-white rounded-full text-lg font-black transition-all flex items-center justify-center gap-3 backdrop-blur-md">
+            <Link href="/services" className="w-full sm:w-auto px-12 py-5 bg-white/5 border-2 border-white/20 hover:bg-white hover:text-navy hover:border-white text-white rounded-full text-lg font-black transition-all flex items-center justify-center gap-3 backdrop-blur-md">
               Our Capabilities <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -144,7 +145,7 @@ const Home: React.FC = () => {
               <h2 className="text-xs font-black text-salesforce uppercase tracking-[0.4em] mb-6">Operational Excellence</h2>
               <h3 className="text-4xl md:text-6xl font-black text-navy tracking-tight leading-tight">6 Strategic Pillars of Digital Success</h3>
             </div>
-            <Link to="/services" className="px-10 py-5 bg-white border border-gray-200 text-navy font-black rounded-full hover:bg-salesforce hover:text-white transition-all shadow-sm">
+            <Link href="/services" className="px-10 py-5 bg-white border border-gray-200 text-navy font-black rounded-full hover:bg-salesforce hover:text-white transition-all shadow-sm">
               View Detailed Roadmaps
             </Link>
           </div>
@@ -155,7 +156,7 @@ const Home: React.FC = () => {
                 {getServiceVisual(service.id, service.icon)}
                 <h4 className="text-2xl font-black text-navy mb-5 tracking-tight">{service.title}</h4>
                 <p className="text-gray-500 mb-10 flex-grow leading-relaxed font-light text-lg">{service.shortDescription}</p>
-                <Link to="/services" className="text-salesforce font-black inline-flex items-center gap-2 group/link text-sm uppercase tracking-[0.2em]">
+                <Link href="/services" className="text-salesforce font-black inline-flex items-center gap-2 group/link text-sm uppercase tracking-[0.2em]">
                   Master Pillar <ArrowRight className="w-4 h-4 group-hover/link:translate-x-2 transition-transform" />
                 </Link>
               </div>
@@ -177,7 +178,7 @@ const Home: React.FC = () => {
                 Join the elite enterprises leveraging Agentforce to outpace the competition. Your journey to an autonomous organization starts with a single audit.
               </p>
               <div className="flex flex-col items-center gap-10">
-                <Link to="/contact" className="px-16 py-7 bg-white text-salesforce rounded-full text-2xl font-black hover:bg-navy hover:text-white transition-all transform hover:scale-105 shadow-2xl flex items-center gap-4">
+                <Link href="/contact" className="px-16 py-7 bg-white text-salesforce rounded-full text-2xl font-black hover:bg-navy hover:text-white transition-all transform hover:scale-105 shadow-2xl flex items-center gap-4">
                   Request Free Audit <MessageSquare className="w-7 h-7 fill-current" />
                 </Link>
                 <div className="flex flex-wrap items-center justify-center gap-10 text-white/60 text-[10px] font-black uppercase tracking-[0.3em]">
@@ -191,7 +192,6 @@ const Home: React.FC = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Home;

@@ -1,6 +1,6 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import Image from 'next/image'
 import { 
   Users, 
   Target, 
@@ -11,10 +11,20 @@ import {
   CheckCircle2,
   Linkedin,
   Twitter
-} from 'lucide-react';
-import { TEAM } from '../constants';
+} from 'lucide-react'
+import { TEAM, COMPANY_CONFIG } from '@/constants'
 
-const About: React.FC = () => {
+export const metadata: Metadata = {
+  title: 'About Us | SalesforceTroopAi - Redefining Salesforce Consulting',
+  description: 'Founded in 2015, SalesforceTroopAi is a global remote-first team of architects, developers, and strategists specializing in AI-powered Salesforce solutions.',
+  keywords: ['About SalesforceTroopAi', 'Salesforce Consultants', 'Salesforce Team', 'Salesforce Experts'],
+  openGraph: {
+    title: 'About Us | SalesforceTroopAi - Redefining Salesforce Consulting',
+    description: 'We blend deep ecosystem expertise with cutting-edge AI strategy to build the CRM solutions of tomorrow.',
+  },
+}
+
+export default function AboutPage() {
   return (
     <div className="bg-white">
       {/* Header */}
@@ -58,7 +68,7 @@ const About: React.FC = () => {
             </div>
             <div className="relative">
               <div className="aspect-square bg-gray-100 rounded-[4rem] overflow-hidden shadow-2xl relative group">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000&h=1000" alt="Team collaborating" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <Image src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1000&h=1000" alt="Team collaborating" width={1000} height={1000} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent"></div>
               </div>
               <div className="absolute -bottom-10 -left-10 bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 max-w-xs transform hover:-translate-y-2 transition-transform">
@@ -109,15 +119,16 @@ const About: React.FC = () => {
             {TEAM.map((member, i) => (
               <div key={i} className="group relative">
                 <div className="aspect-[4/5] bg-navy rounded-[2.5rem] overflow-hidden mb-6 relative shadow-xl transform transition-transform duration-500 hover:-translate-y-4">
-                  {/* Glassmorphism gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-navy via-transparent to-salesforce/20 mix-blend-overlay z-10"></div>
-                  <img 
+                  <Image 
                     src={member.photo} 
                     alt={member.name} 
-                    className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-1000 ease-out brightness-90 group-hover:brightness-100" 
+                    width={800}
+                    height={1000}
+                    className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-1000 ease-out brightness-90 group-hover:brightness-100"
+                    unoptimized
                   />
                   
-                  {/* Floating badge */}
                   <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] font-bold text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                     SF Master
                   </div>
@@ -125,8 +136,12 @@ const About: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-8 flex flex-col justify-end z-20">
                     <p className="text-white text-sm leading-relaxed mb-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 font-light italic">"{member.bio}"</p>
                     <div className="flex gap-3">
-                      <a href="#" className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-salesforce transition-colors"><Linkedin size={14}/></a>
-                      <a href="#" className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-salesforce transition-colors"><Twitter size={14}/></a>
+                      {COMPANY_CONFIG.social.linkedin && (
+                        <a href={COMPANY_CONFIG.social.linkedin} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-salesforce transition-colors"><Linkedin size={14}/></a>
+                      )}
+                      {COMPANY_CONFIG.social.twitter && (
+                        <a href={COMPANY_CONFIG.social.twitter} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-salesforce transition-colors"><Twitter size={14}/></a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -186,13 +201,12 @@ const About: React.FC = () => {
         <div className="absolute top-0 right-0 w-64 h-64 bg-salesforce/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h3 className="text-3xl font-bold text-white mb-8">Want to work with a world-class team?</h3>
-          <Link to="/contact" className="inline-flex items-center gap-3 px-12 py-5 bg-salesforce text-white rounded-full font-bold hover:bg-teal-accent transition-all shadow-xl shadow-salesforce/20">
+          <Link href="/contact" className="inline-flex items-center gap-3 px-12 py-5 bg-salesforce text-white rounded-full font-bold hover:bg-teal-accent transition-all shadow-xl shadow-salesforce/20">
             Schedule a Discovery Call <Calendar className="w-5 h-5" />
           </Link>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default About;
